@@ -1,0 +1,13 @@
+<div *ngIf="loading" class="empty-container">
+    Loading...
+</div>
+<div class="row panel-container" *ngIf="!loading">
+    <div class="col-3 camera-container" *ngFor="let camera of cameras; index as i">
+        <div class="">
+            <h3>{{camera.name}}</h3>
+        </div>
+        <div class="">
+            <img class="panel-img" [src]="camera.image" alt="My image {{i + 1}}">
+        </div>
+    </div>
+</div>

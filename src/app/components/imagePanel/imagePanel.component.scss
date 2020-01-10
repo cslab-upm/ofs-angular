@@ -1,0 +1,20 @@
+.empty-container {
+    min-height: calc(100vh - 212px);
+}
+.panel-container {
+    margin-top: 66px;
+    position: relative;
+    width: 100%;
+    padding: 0 20px;
+    min-height: calc(100vh - 249px);
+
+    .camera-container {
+        color: white;
+        padding: 10px;
+        
+        .panel-img {
+            display: block;
+            width: 100%;
+        }
+    }
+}
