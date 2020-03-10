@@ -10,7 +10,14 @@ import { CamerasService } from '../../services/cameras.service';
 export class CarouselComponent implements OnInit {
     loading = true; 
     cameras:Array<any>;
-
+    
+    
+    onSlide(e){
+        console.log(e)
+    }
+    pauseOnHover(){
+        console.log("pauseOnHover")
+    }
     constructor(private camerasService: CamerasService) {
     }
 

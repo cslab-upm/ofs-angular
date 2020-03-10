@@ -10,7 +10,7 @@ export class EquipmentService {
             name: 'Telescopio Meade',
             model: 'MEADE LX200-ACF',
             description: 'Telescopio comercial más utilizado en investigación.',
-            image: '../assets/img/equipment/meade-lx200.jpg',
+            image: 'assets/img/equipment/meade-lx200.jpg',
             type: 'telescope',
             properties: [
                 {
@@ -31,7 +31,7 @@ export class EquipmentService {
             name: 'Cámara DMK',
             model: 'DMK41 02 AU',
             description: 'Cámara profesional para máximo rendimiento en astrofotografía planetaria, lunar y solar.',
-            image: '../assets/img/equipment/dmk41.jpg',
+            image: 'assets/img/equipment/dmk41.jpg',
             type: 'camera',
             properties: [
                 {
@@ -52,7 +52,7 @@ export class EquipmentService {
             name: 'Mobotix Allsky',
             model: 'Mobotix Q25 Hemisferic',
             description: 'Cámara profesional hemisférica para exteriores con lente de ojo de pez.',
-            image: '../assets/img/equipment/mobotix-q25.jpg',
+            image: 'assets/img/equipment/mobotix-q25.jpg',
             type: 'camera',
             properties: [
                 {
@@ -77,7 +77,7 @@ export class EquipmentService {
             name: 'Mobotix M16',
             model: 'Mobotix M16 AllaroundDual',
             description: 'Cámara de videovigilancia Dual, resistente a la intemperie.',
-            image: '../assets/img/equipment/mobotix-m16.jpg',
+            image: 'assets/img/equipment/mobotix-m16.jpg',
             type: 'camera',
             properties: [
                 {
@@ -90,7 +90,7 @@ export class EquipmentService {
             name: 'Webcam',
             model: 'Philips ToUcam PRO',
             description: '',
-            image: '../assets/img/equipment/philips-toucam.jpg',
+            image: 'assets/img/equipment/philips-toucam.jpg',
             type: 'camera',
             properties: [
                 {
@@ -111,7 +111,7 @@ export class EquipmentService {
             name: 'Meteo Watcher',
             model: 'Meteo Watcher III',
             description: 'Monitor de condiciones medioambientales para observatorios astronómicos.',
-            image: '../assets/img/equipment/meteowatcher.jpg',
+            image: 'assets/img/equipment/meteowatcher.jpg',
             type: 'sensor',
             properties: []
         },
@@ -119,7 +119,7 @@ export class EquipmentService {
             name: 'Estación Meteorológica',
             model: 'Estación Meteorológica',
             description: 'Estación meteorloógica de construcción propia, empleada para la recuperación de datos climáticos en el observatorio.',
-            image: '../assets/img/equipment/meteostation.jpg',
+            image: 'assets/img/equipment/meteostation.jpg',
             type: 'sensor',
             properties: [
                 {
