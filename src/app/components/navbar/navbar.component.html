@@ -1,16 +1,14 @@
-<nav class="navbar navbar-expand-md navbar-dark micolor fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark  ">
     <a class="navbar-brand" href="#">
-        <img src="../../../assets/img/logos/logo_ofs_dark.png" width="30" height="30" class="d-inline-block align-top navbar-logo" alt="OFS">
+        <img src="../../../assets/img/logos/logo_ofs_dark.png" width="30" height="30" class="navbar-logo" alt="OFS">
     </a>
-    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
-        data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false"
-        aria-label="Toggle navigation">
+    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarsDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown" ngbDropdown>
-                <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>Monitorización</a>
+            <li class="dropdown nav-item" ngbDropdown>
+                <a class="dropdown-toggle nav-link" id="id01" ngbDropdownToggle>Monitorización</a>
                 <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
                     <a class="dropdown-item" [routerLink]="['/monitorizacion/camaras']" routerLinkActive="router-link-active">Cámaras</a>
                     <a class="dropdown-item" [routerLink]="['/monitorizacion/estacion-meteorologica']">Estación meteorológica</a>
@@ -19,8 +17,21 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/equipamiento']">Equipamiento</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link">Contacto</a>
+            </li> -->
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <a *ngIf="!isLoggedIn" class="nav-link" [routerLink]="['/register']">Regístrate</a>
+            <a *ngIf="!isLoggedIn" class="nav-link" [routerLink]="['/login']">Login</a>
+            <li class="nav-item" class="dropdown nav-item" ngbDropdown>
+                <a *ngIf="isLoggedIn" class="dropdown-toggle nav-link" id="id02" ngbDropdownToggle>{{userName}}</a>
+                <div *ngIf="isLoggedIn" class="dropdown-menu" aria-labelledby="id02" ngbDropdownMenu>
+                    <a class="dropdown-item" [routerLink]="['/account']">Mi cuenta</a>
+                    <a class="dropdown-item" (click)="pictures()">Mis fotos</a>
+                    <a class="dropdown-item" (click)="logout()">Logout</a>
+                </div>
             </li>
         </ul>
     </div>

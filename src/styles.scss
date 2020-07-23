@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+body {
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    background: radial-gradient(ellipse at bottom, #204980 0%, #000000 100%);
+    background-attachment: fixed;
+    // background: radial-gradient(ellipse at bottom, #23262a 0%, #000000 100%);
+}
+
+app-root {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.image {
+    width: 100%;
+}
+
+.clear {
+    clear: both;
+}
+
+.ficha {
+    border-radius: 15px;
+    .image {
+        border-radius: 15px 0 0 15px;
+    }
+}

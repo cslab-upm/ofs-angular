@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="card transparent  z-depth-5">
+        <form class="card-content  s12">
+
+            <h1 class="center-align">Registro</h1>
+            <div class="form-group col s12">
+                <label for="firstname" class="card-title">Nombre</label>
+                <input name="firstname" type="text" class="white-text" [(ngModel)]="firstName">
+            </div>
+            <div class="form-group col s12">
+                <label for="lastname" class="card-title">Apellidos</label>
+                <input name="lastname" type="text" class="white-text" [(ngModel)]="lastName">
+            </div>
+            <div class="form-group col s12">
+                <label for="email" class="card-title">Correo Electrónico</label>
+                <input name="email" type="text" class="white-text" [(ngModel)]="email" required>
+            </div>
+            <div class="form-group col s12">
+                <label for="password" class="card-title">Contraseña</label>
+                <input name="password" type="password" class="white-text" [(ngModel)]="password" required>
+            </div>
+            <div class="form-group col s12">
+                <label for="repeat_password" class="card-title">Repetir Contraseña</label>
+                <input name="repeat_password" type="password" class="white-text" [(ngModel)]="repeat_password" required>
+            </div>
+            <div class="col s12">
+                <button class="btn white right " (click)="register()">Registrarse</button>
+            </div>
+
+        </form>
+    </div>
+</main>

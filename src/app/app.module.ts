@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LandingComponent } from './components/landing/landing.component';
@@ -13,6 +14,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { CarouselComponent } from './components/carousel/carousel.component'
 import { WeatherComponent } from './components/weather/weather.component'
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AccountComponent } from './components/account/account.component';
 
 
 @NgModule({
@@ -23,7 +27,10 @@ import { FooterComponent } from './components/footer/footer.component';
     CarouselComponent,
     WeatherComponent,
     FooterComponent,
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    AccountComponent
   ],
   imports: [
     AppRoutingModule,
@@ -31,7 +38,8 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
     NgbModule,
     FontAwesomeModule,
-    TranslateModule.forRoot()
+    TranslateModule.forRoot(),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

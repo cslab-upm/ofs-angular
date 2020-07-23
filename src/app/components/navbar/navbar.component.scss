@@ -1,32 +1,54 @@
 /* On scroll changes to background-color: #272727; */
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
 nav {
     background-color: transparent;
     transition: background-color 0.4s ease-out;
     font-family: 'Montserrat', sans-serif;
- }
- .navbar-logo {
+    display: flex;
+    height: auto;
+}
+
+.navbar-logo {
     height: 35px;
     width: auto;
- }
- .navbar-dark .navbar-nav .nav-link {
-   color: white;
- }
- .nav-link {
-   padding-bottom: 0;
-   font-size: 14px;
-   padding-top: 15px;
- }
- .dropdown-menu {
-   background-color: #353535c4;
-   border-radius: 0;
- }
- .dropdown-item {
-    color:white;
-    font-size: 13px;
- }
- .dropdown-item:hover {
-   background-color: #353535c4;
-   color: #677FE8;
- }
+    margin-top: -15px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    background-color: #2c5894;
+    border-radius: 15px;
+    min-width: 100%;
+    min-width: -moz-available;
+    /* WebKit-based browsers will ignore this. */
+    min-width: -webkit-fill-available;
+    /* Mozilla-based browsers will ignore this. */
+    min-width: fill-available;
+    padding: 0;
+}
+
+.dropdown-item {
+    color: white !important;
+    font-size: unset !important;
+    border-radius: 15px;
+}
+
+.dropdown-item:hover {
+    background-color: #3a7ad4;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.355em;
+    vertical-align: 0.155em;
+}
+
+nav ul a {
+    font-size: 19px !important;
+}

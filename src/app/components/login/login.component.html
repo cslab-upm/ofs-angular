@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="card transparent  z-depth-5">
+        <form class="card-content  s12">
+
+            <h1 class="center-align">Iniciar Sesión</h1>
+
+            <div class="form-group col s12">
+                <label for="user" class="card-title">Usuario</label>
+                <input name="user" type="text" class="white-text" [(ngModel)]="user" required>
+            </div>
+            <div class="form-group col s12">
+                <label for="password" class="card-title">Contraseña</label>
+                <input name="password" type="password" class="white-text" [(ngModel)]="password" required>
+            </div>
+
+            <div class="col s12">
+                <button class="btn white right " (click)="login()">Entrar</button>
+            </div>
+
+        </form>
+    </div>
+</main>
