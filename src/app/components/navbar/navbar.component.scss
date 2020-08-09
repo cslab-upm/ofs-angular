@@ -23,25 +23,23 @@ nav {
 }
 
 .dropdown-menu {
-    background-color: #2c5894;
-    border-radius: 15px;
-    min-width: 100%;
-    min-width: -moz-available;
-    /* WebKit-based browsers will ignore this. */
-    min-width: -webkit-fill-available;
-    /* Mozilla-based browsers will ignore this. */
-    min-width: fill-available;
+    background-color: #0f2036e0;
     padding: 0;
+    border-radius: 5px;
+}
+
+.dropdown-toggle {
+    min-width: 200px;
 }
 
 .dropdown-item {
     color: white !important;
     font-size: unset !important;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 
 .dropdown-item:hover {
-    background-color: #3a7ad4;
+    background-color: #18345ae1;
 }
 
 .dropdown-toggle::after {

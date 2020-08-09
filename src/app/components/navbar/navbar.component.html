@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark  ">
+<nav class="navbar navbar-expand-md navbar-dark   z-depth-3">
     <a class="navbar-brand" href="#">
         <img src="../../../assets/img/logos/logo_ofs_dark.png" width="30" height="30" class="navbar-logo" alt="OFS">
     </a>
@@ -25,9 +25,9 @@
         <ul class="navbar-nav ml-auto">
             <a *ngIf="!isLoggedIn" class="nav-link" [routerLink]="['/register']">Regístrate</a>
             <a *ngIf="!isLoggedIn" class="nav-link" [routerLink]="['/login']">Login</a>
-            <li class="nav-item" class="dropdown nav-item" ngbDropdown>
-                <a *ngIf="isLoggedIn" class="dropdown-toggle nav-link" id="id02" ngbDropdownToggle>{{userName}}</a>
-                <div *ngIf="isLoggedIn" class="dropdown-menu" aria-labelledby="id02" ngbDropdownMenu>
+            <li *ngIf="isLoggedIn" class="nav-item" class="dropdown nav-item" ngbDropdown>
+                <a class="dropdown-toggle nav-link" id="id02" ngbDropdownToggle>{{userName}}</a>
+                <div class="dropdown-menu" aria-labelledby="id02" ngbDropdownMenu>
                     <a class="dropdown-item" [routerLink]="['/account']">Mi cuenta</a>
                     <a class="dropdown-item" (click)="pictures()">Mis fotos</a>
                     <a class="dropdown-item" (click)="logout()">Logout</a>

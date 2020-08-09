@@ -10,23 +10,28 @@ import { Observable, Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit {
 	isNavbarCollapsed: boolean;
 	isLoggedIn: boolean;
-  userData: object;
-  userName: string;
+	userData: object;
+	userName: string;
 	logout: Function;
 	constructor(protected authService: AuthenticationService) {
 		this.isNavbarCollapsed = true;
 		this.authService.isLoggedChange.subscribe((value) => {
 			this.isLoggedIn = value;
 			console.log('val', value);
+			this.authService.updateIsLoggedChange();
+			this.authService.updateUserDataChange();
 		});
 		this.authService.userDataChange.subscribe((value) => {
-      this.userData = value;
-      this.userName = value['name'];
+			this.userData = value;
+			this.userName = value['name'];
+			this.authService.updateIsLoggedChange();
+			this.authService.updateUserDataChange();
 			console.log('userData', value);
 		});
-		this.logout = () => this.authService.logout();
-		this.authService.updateIsLoggedChange();
-		this.authService.updateUserDataChange();
+		this.logout = () => {
+			this.authService.logout();
+    };
+
 	}
 	ngOnInit() {}
 }

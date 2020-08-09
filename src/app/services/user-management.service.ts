@@ -13,12 +13,11 @@ export class UserManagementService {
 		this.authService.isLoggedChange.subscribe(this.setLoggedIn);
 	}
 
-	public register(usuario) {
-		const res = this.http.post<Object>('http://localhost:3600/users', usuario);
-		return res;
+	public register(usuario: any): Observable<any> {
+		return this.http.post('http://localhost:3600/users', usuario);
 	}
 
-  setLoggedIn(value){
-    this.isLoggedIn = value;
-  }
+	setLoggedIn(value) {
+		this.isLoggedIn = value;
+	}
 }

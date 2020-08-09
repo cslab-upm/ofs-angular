@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../../user';
 import { userInfo } from 'os';
 import { UserManagementService } from 'src/app/services/user-management.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
 	selector: 'app-register',
@@ -16,7 +17,11 @@ export class RegisterComponent implements OnInit {
 	@Input() password: string = 's3cr3tp4sswo4rd';
 	@Input() repeat_password: string = 's3cr3tp4sswo4rd';
 
-	constructor(protected userService: UserManagementService, private router: Router) {}
+	constructor(
+		protected userService: UserManagementService,
+		protected authService: AuthenticationService,
+		private router: Router
+	) {}
 
 	ngOnInit() {}
 	register(): void {
@@ -26,6 +31,18 @@ export class RegisterComponent implements OnInit {
 				// Success
 				console.log('Register Successful');
 				console.log('data', data);
+				this.authService.login(usuario.email, usuario.password).subscribe(
+					(data) => {
+						// Success
+						this.authService.setSession(data);
+						console.log('Login Successful');
+						this.router.navigateByUrl('/');
+					},
+					(error) => {
+						console.log('Error en Login');
+						console.error(error);
+					}
+				);
 				this.router.navigateByUrl('/');
 			},
 			(error) => {
