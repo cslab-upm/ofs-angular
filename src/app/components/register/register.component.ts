@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit() {}
 	register(): void {
+    this.userService.findByEmail(this.email);
 		let usuario = this.fillUser();
 		this.userService.register(usuario).subscribe(
 			(data) => {

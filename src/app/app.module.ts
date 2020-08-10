@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http'
@@ -36,7 +36,7 @@ import { AccountComponent } from './components/account/account.component';
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    // NgbModule,
+    NgbModule,
     FontAwesomeModule,
     TranslateModule.forRoot(),
     FormsModule

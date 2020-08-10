@@ -17,28 +17,28 @@ export class AuthenticationService {
 		this.isLoggedChange.subscribe(this.setIsUserLogged);
 		this.userDataChange.subscribe(this.setUserData);
 	}
-	setIsUserLogged(value) {
+	private setIsUserLogged(value) {
 		this.isUserLogged = value;
 	}
-	setUserData(value) {
+	private setUserData(value) {
 		this.userData = value;
-  }
-
-	login(user: string, pass: string): Observable<any> {
-		return this.http.post('http://localhost:3600/auth',  { email: user, password: pass });
 	}
 
-	register(user: any): Observable<any> {
-		return this.http.post('http://localhost:3600/users', user);
-  }
+	public login(user: string, pass: string): Observable<any> {
+		return this.http.post('http://localhost:3600/auth', { email: user, password: pass });
+	}
 
-	logout() {
+	public register(user: any): Observable<any> {
+		return this.http.post('http://localhost:3600/users', user);
+	}
+
+	public logout() {
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');
 	}
-	setSession(authResult) {
-		localStorage.set('accessToken', authResult.accessToken);
-		localStorage.set('refreshToken', authResult.refreshToken);
+	public setSession(authResult) {
+		localStorage.setItem('accessToken', authResult.accessToken);
+		localStorage.setItem('refreshToken', authResult.refreshToken);
 	}
 
 	public updateIsLoggedChange() {
@@ -63,8 +63,6 @@ export class AuthenticationService {
 			} catch (error) {
 				console.log('errorUserData', error);
 			}
-		} else {
-			return null;
 		}
 	}
 }
