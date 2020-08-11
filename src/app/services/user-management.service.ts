@@ -17,6 +17,13 @@ export class UserManagementService {
 		return this.http.post('http://localhost:3600/users', usuario);
 	}
 
+	public checkByEmail(email: any): any{
+		return this.http.get('http://localhost:3600/users/check/'+email);
+	}
+	public getById(userId: any): any {
+		return this.http.get('http://localhost:3600/users/'+ userId);
+	}
+
 	setLoggedIn(value) {
 		this.isLoggedIn = value;
 	}

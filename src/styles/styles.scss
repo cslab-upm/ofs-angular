@@ -7,6 +7,14 @@ body {
     // background: radial-gradient(ellipse at bottom, #23262a 0%, #000000 100%);
 }
 
+.bluesky{
+
+    background: radial-gradient(ellipse at bottom, #204980 0%, #000000 100%);
+}
+.bluesky-reverse{
+
+    background: radial-gradient(ellipse at top, #204980 50%, #000000 100%);
+}
 app-root {
     display: flex;
     min-height: 100vh;

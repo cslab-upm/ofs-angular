@@ -13,7 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class RegisterComponent implements OnInit {
 	@Input() firstName: string = 'Gabriel';
 	@Input() lastName: string = 'Castro Muñoz';
-	@Input() email: string = 'gabcas28@gmail.com';
+	@Input() email: string ;
 	@Input() password: string = 's3cr3tp4sswo4rd';
 	@Input() repeat_password: string = 's3cr3tp4sswo4rd';
 
@@ -25,32 +25,39 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit() {}
 	register(): void {
-    this.userService.findByEmail(this.email);
 		let usuario = this.fillUser();
-		this.userService.register(usuario).subscribe(
-			(data) => {
-				// Success
-				console.log('Register Successful');
-				console.log('data', data);
-				this.authService.login(usuario.email, usuario.password).subscribe(
-					(data) => {
-						// Success
-						this.authService.setSession(data);
-						console.log('Login Successful');
-						this.router.navigateByUrl('/');
-					},
-					(error) => {
-						console.log('Error en Login');
-						console.error(error);
-					}
-				);
-				this.router.navigateByUrl('/');
-			},
-			(error) => {
-				console.log('Error en Login');
-				console.error(error);
+		this.userService.checkByEmail(usuario.email).toPromise().then((result)=>  {
+			console.log("registered",result)
+			if(result){
+				alert("User Already registered")
+				return
 			}
-		);
+			this.userService.register(usuario).subscribe(
+				(data) => {
+					// Success
+					console.log('Register Successful');
+					console.log('data', data);
+					this.authService.login(usuario.email, usuario.password).subscribe(
+						(data) => {
+							// Success
+							this.authService.setSession(data);
+							console.log('Login Successful');
+							this.router.navigateByUrl('/');
+						},
+						(error) => {
+							console.log('Error en Login');
+							console.error(error);
+						}
+					);
+					this.router.navigateByUrl('/');
+				},
+				(error) => {
+					console.log('Error en Login');
+					console.error(error);
+				}
+			);
+		});
+		
 	}
 	fillUser(): User {
 		let usuario: User = new User();

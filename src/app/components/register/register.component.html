@@ -2,7 +2,7 @@
 <main class="container white-text">
     <div class="row justify-content-center">
         <div class="ficha transparent col-12 col-lg-10 z-depth-5">
-            <form class="card-content  container">
+            <form class="card-content  container" onsubmit="register()">
 
                 <h1 class="center-align">Registro</h1>
 
@@ -28,7 +28,7 @@
                         <input name="repeat_password" type="password" class="white-text" [(ngModel)]="repeat_password" required>
                     </div>
                     <div class="col-12">
-                        <button class="btn white float-right" (click)="register()">Registrarse</button>
+                        <button type="submit" class="btn white float-right">Registrarse</button>
                     </div>
                 </div>
             </form>
