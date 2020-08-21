@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CamerasService } from '../../services/cameras.service';
+import { CamerasService } from '../../services/cameras/cameras.service';
 
 @Component({
     selector: 'carousel',
@@ -8,10 +8,10 @@ import { CamerasService } from '../../services/cameras.service';
 })
 
 export class CarouselComponent implements OnInit {
-    loading = true; 
+    loading = true;
     cameras:Array<any>;
-    
-    
+
+
     onSlide(e){
         console.log(e)
     }

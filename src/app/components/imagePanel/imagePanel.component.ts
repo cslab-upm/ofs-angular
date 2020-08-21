@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CamerasService } from '../../services/cameras.service';
+import { CamerasService } from '../../services/cameras/cameras.service';
 
 @Component({
 	selector: 'imagePanel',

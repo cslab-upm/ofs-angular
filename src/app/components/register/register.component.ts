@@ -1,70 +1,54 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../user';
-import { userInfo } from 'os';
-import { UserManagementService } from 'src/app/services/user-management.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserManagementService } from 'src/app/services/user-management/user-management.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { ActivationService } from 'src/app/modules/activation/services/activation.service';
 
 @Component({
 	selector: 'app-register',
 	templateUrl: './register.component.html',
 	styleUrls: [ './register.component.scss' ]
 })
-export class RegisterComponent implements OnInit {
-	@Input() firstName: string = 'Gabriel';
-	@Input() lastName: string = 'Castro Muñoz';
-	@Input() email: string ;
-	@Input() password: string = 's3cr3tp4sswo4rd';
-	@Input() repeat_password: string = 's3cr3tp4sswo4rd';
-
+export class RegisterComponent {
 	constructor(
 		protected userService: UserManagementService,
 		protected authService: AuthenticationService,
+		protected activationService: ActivationService,
 		private router: Router
 	) {}
 
-	ngOnInit() {}
-	register(): void {
-		let usuario = this.fillUser();
-		this.userService.checkByEmail(usuario.email).toPromise().then((result)=>  {
-			console.log("registered",result)
-			if(result){
-				alert("User Already registered")
-				return
+	register(usuario): void {
+		console.log(usuario);
+		this.userService.checkByEmail(usuario.email).subscribe((result) => {
+			if (result) {
+				alert('El usuario introducido ya está registrado.');
+				return;
 			}
-			this.userService.register(usuario).subscribe(
-				(data) => {
-					// Success
-					console.log('Register Successful');
-					console.log('data', data);
-					this.authService.login(usuario.email, usuario.password).subscribe(
-						(data) => {
-							// Success
-							this.authService.setSession(data);
-							console.log('Login Successful');
-							this.router.navigateByUrl('/');
-						},
-						(error) => {
-							console.log('Error en Login');
-							console.error(error);
-						}
-					);
-					this.router.navigateByUrl('/');
-				},
-				(error) => {
-					console.log('Error en Login');
-					console.error(error);
-				}
-			);
+			this.userService.register(usuario).subscribe((data) => {
+				// Success
+				console.log('Register Successful');
+				usuario.userId = data.id;
+				this.activationService.sendVerificationEmail(usuario.email).subscribe(
+					(data) => {
+						alert('Hemos enviado un email de confirmación, por favor verifica tu bandeja de entrada');
+					},
+					(error) => {
+						alert('Error al enviar mensaje');
+					}
+				);
+				this.authService.login(usuario.email, usuario.password).subscribe(
+					(data) => {
+						// Success
+						this.authService.setSession(data);
+						this.authService.updateIsLoggedChange();
+						this.authService.updateUserDataChange();
+						this.router.navigateByUrl('/');
+					},
+					(error) => {
+						console.log('Error en Login');
+					}
+				);
+			});
 		});
-		
-	}
-	fillUser(): User {
-		let usuario: User = new User();
-		usuario.firstName = this.firstName;
-		usuario.lastName = this.lastName;
-		usuario.password = this.password;
-		usuario.email = this.email;
-		return usuario;
 	}
 }

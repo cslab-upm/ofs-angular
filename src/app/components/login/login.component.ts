@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 import { Router } from '@angular/router';
 
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
 				this.router.navigateByUrl('/');
 			},
 			(error) => {
-				console.log('Error en Login');
-				console.error(error);
+				alert('Error en Login');
+				console.error('Error en Login',error);
 			}
 		);
 	}

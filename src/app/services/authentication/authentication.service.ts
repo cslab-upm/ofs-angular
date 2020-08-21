@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
 // import { CookieService } from "ngx-cookie-service";
@@ -6,7 +6,7 @@ import { Observable, of, Subject } from 'rxjs';
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements OnInit {
 	isUserLogged: boolean;
 	userData: object;
 
@@ -17,6 +17,10 @@ export class AuthenticationService {
 		this.isLoggedChange.subscribe(this.setIsUserLogged);
 		this.userDataChange.subscribe(this.setUserData);
 	}
+	ngOnInit() {
+		this.updateIsLoggedChange;
+		this.updateUserDataChange;
+	}
 	private setIsUserLogged(value) {
 		this.isUserLogged = value;
 	}
@@ -25,11 +29,11 @@ export class AuthenticationService {
 	}
 
 	public login(user: string, pass: string): Observable<any> {
-		return this.http.post('http://localhost:3600/auth', { email: user, password: pass });
+		return this.http.post('http://localhost:5000/auth', { email: user, password: pass });
 	}
 
 	public register(user: any): Observable<any> {
-		return this.http.post('http://localhost:3600/users', user);
+		return this.http.post('http://localhost:5000/users', user);
 	}
 
 	public logout() {

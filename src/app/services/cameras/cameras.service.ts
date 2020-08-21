@@ -7,7 +7,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
 })
 export class CamerasService {
     devices: Array<String>;
-    apiUrl = 'http://138.100.9.212:5000/images';
+    apiUrl = 'http://localhost:5000/images';
 
     constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     }

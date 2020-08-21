@@ -1,0 +1,36 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group col-12">
+        <label for="firstname" class="card-title">Nombre</label>
+        <input id="firstname" type="text" class="white-text" formControlName="firstName" required>
+    </div>
+    <div class="form-group col-12">
+        <label for="lastname" class="card-title">Apellidos</label>
+        <input id="lastname" type="text" class="white-text" formControlName="lastName" required>
+    </div>
+    <div class="form-group col-12">
+        <label for="email" class="card-title">Correo Electrónico</label>
+        <input id="email" type="text" class="white-text" formControlName="email" required>
+    </div>
+    <div class="form-group col-12">
+        <label for="password" class="card-title">Contraseña</label>
+        <input id="password" type="password" class="white-text" formControlName="password" required>
+    </div>
+    <div class="form-group col-12">
+        <label for="repeat_password" class="card-title">Repetir Contraseña</label>
+        <input [ngClass]="userForm.hasError('notSame')?'invalid':''" id="repeat_password" type="password" class="white-text" formControlName="repeatPassword" required>
+        <div *ngIf="userForm.hasError('notSame')">
+            Las contraseñas no son iguales.
+        </div>
+    </div>
+    <div class="form-group col-12">
+        <div class="row col-12">
+            <re-captcha formControlName="recaptchaReactive"></re-captcha>
+        </div>
+
+    </div>
+    <div class="form-group col-12">
+        <div class="row">
+            <button type="submit" class="btn white col-3 ml-auto mr-3" [disabled]="!userForm.valid ">Enviar</button>
+
+        </div>
+    </div>

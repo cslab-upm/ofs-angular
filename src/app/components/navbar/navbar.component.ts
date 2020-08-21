@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -30,5 +30,8 @@ export class NavbarComponent implements OnInit {
 			this.router.navigateByUrl('/');
 		};
 	}
-	ngOnInit() {}
+	ngOnInit() {
+		this.authService.updateIsLoggedChange();
+		this.authService.updateUserDataChange();
+	}
 }
