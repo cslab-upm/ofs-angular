@@ -1,32 +1,62 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group col-12">
         <label for="firstname" class="card-title">Nombre</label>
-        <input id="firstname" type="text" class="white-text" formControlName="firstName" required>
+        <input [class.invalid]="userForm.get('firstName').errors && (userForm.get('firstName').dirty || userForm.get('firstName').touched)" [class.valid]="!userForm.get('firstName').errors" id="firstname" type="text" class="white-text" formControlName="firstName"
+            required>
+        <div *ngIf="userForm.get('firstName').errors && (userForm.get('firstName').dirty || userForm.get('firstName').touched)">
+            <div *ngIf="userForm.get('firstName').hasError('required')">
+                El nombre es necesario.
+            </div>
+        </div>
     </div>
     <div class="form-group col-12">
         <label for="lastname" class="card-title">Apellidos</label>
-        <input id="lastname" type="text" class="white-text" formControlName="lastName" required>
+        <input [class.invalid]="userForm.get('lastName').errors && (userForm.get('lastName').dirty || userForm.get('lastName').touched)" [class.valid]="!userForm.get('lastName').errors" id="lastname" type="text" class="white-text" formControlName="lastName" required>
+        <div *ngIf="userForm.get('lastName').errors && (userForm.get('lastName').dirty || userForm.get('lastName').touched)">
+            <div *ngIf="userForm.get('lastName').hasError('required')">
+                Los apellidos son necesarios.
+            </div>
+        </div>
     </div>
     <div class="form-group col-12">
         <label for="email" class="card-title">Correo Electrónico</label>
-        <input id="email" type="text" class="white-text" formControlName="email" required>
+        <input [class.invalid]="userForm.get('email').errors && (userForm.get('email').dirty || userForm.get('email').touched)" [class.valid]="!userForm.get('email').errors" id="email" type="text" class="white-text" formControlName="email" required>
+        <div *ngIf="userForm.get('email').errors && (userForm.get('email').dirty || userForm.get('email').touched)">
+            <div *ngIf="userForm.get('email').hasError('required')">
+                El email es necesario.
+            </div>
+            <div *ngIf="userForm.get('email').hasError('email')">
+                El email es incorrecto.
+            </div>
+        </div>
     </div>
     <div class="form-group col-12">
         <label for="password" class="card-title">Contraseña</label>
-        <input id="password" type="password" class="white-text" formControlName="password" required>
+        <input [class.invalid]="userForm.get('password').errors && (userForm.get('password').dirty || userForm.get('password').touched)" [class.valid]="!userForm.get('password').errors" id="password" type="password" class="white-text" formControlName="password"
+            required>
+        <div *ngIf="userForm.get('password').errors && (userForm.get('password').dirty || userForm.get('password').touched)">
+            <div *ngIf="userForm.get('password').hasError('required')">
+                La contraseña es necesaria.
+            </div>
+        </div>
     </div>
     <div class="form-group col-12">
         <label for="repeat_password" class="card-title">Repetir Contraseña</label>
-        <input [ngClass]="userForm.hasError('notSame')?'invalid':''" id="repeat_password" type="password" class="white-text" formControlName="repeatPassword" required>
-        <div *ngIf="userForm.hasError('notSame')">
-            Las contraseñas no son iguales.
+        <input [class.invalid]="(userForm.get('repeatPassword').errors || userForm.hasError('notSame')) && (userForm.get('repeatPassword').dirty || userForm.get('repeatPassword').touched)" [class.valid]="!userForm.hasError('notSame') && !userForm.get('repeatPassword').errors"
+            id="repeat_password" type="password" class="white-text" formControlName="repeatPassword" required>
+        <div *ngIf="(userForm.hasError('notSame') || userForm.get('repeatPassword').errors) && (userForm.get('repeatPassword').dirty || userForm.get('repeatPassword').touched)">
+            <div *ngIf="userForm.get('repeatPassword').hasError('required')">
+                Repetir la contraseña es necesario.
+            </div>
+            <div *ngIf="userForm.hasError('notSame')">
+                Las contraseñas no son iguales.
+            </div>
         </div>
     </div>
     <div class="form-group col-12">
         <div class="row col-12">
-            <re-captcha formControlName="recaptchaReactive"></re-captcha>
+            <re-captcha [class.valid]="!userForm.get('recaptchaReactive').errors" [class.invalid]="userForm.get('recaptchaReactive').errors && (userForm.get('recaptchaReactive').dirty || userForm.get('recaptchaReactive').touched)" formControlName="recaptchaReactive"></re-captcha>
         </div>
-
     </div>
     <div class="form-group col-12">
         <div class="row">

@@ -16,7 +16,7 @@ export class UserFormComponent {
 			email: new FormControl('', [ Validators.required, Validators.email ]),
 			password: new FormControl('', Validators.required),
 			repeatPassword: new FormControl('', Validators.required),
-			recaptchaReactive: new FormControl(null, Validators.required)
+			recaptchaReactive: new FormControl('', Validators.required)
 		},
 		this.checkPasswords
 	);
