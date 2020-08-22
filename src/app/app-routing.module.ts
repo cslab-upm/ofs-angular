@@ -10,7 +10,6 @@ const routes: Routes = [
 	{ path: '', component: LandingComponent },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
-	{ path: 'account', component: AccountComponent },
 	{
 		path: 'monitorizacion',
 		loadChildren: () => import('./modules/monitoring/monitoring.module').then((m) => m.MonitoringModule)
@@ -26,6 +25,10 @@ const routes: Routes = [
 	{
 		path: 'recuperar',
 		loadChildren: () => import('./modules/recovery/recovery.module').then((m) => m.RecoveryModule)
+	},
+	{
+		path: 'perfil',
+		loadChildren: () => import('./modules/profile/profile.module').then((m) => m.ProfileModule)
 	},
 	{ path: '**', component: NotFoundComponent }
 ];

@@ -28,7 +28,7 @@
             <li class="nav-item" class="dropdown nav-item" ngbDropdown>
                 <a *ngIf="isLoggedIn" class="dropdown-toggle nav-link" id="id02" ngbDropdownToggle>{{userName}}</a>
                 <div *ngIf="isLoggedIn" class="dropdown-menu" aria-labelledby="id02" ngbDropdownMenu>
-                    <a class="dropdown-item" [routerLink]="['/account']">Mi cuenta</a>
+                    <a class="dropdown-item" [routerLink]="['/perfil']">Mi cuenta</a>
                     <a class="dropdown-item" (click)="pictures()">Mis fotos</a>
                     <a class="dropdown-item" (click)="logout()">Logout</a>
                 </div>

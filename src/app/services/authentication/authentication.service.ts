@@ -1,8 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-// import { CookieService } from "ngx-cookie-service";
-// import * as moment from 'moment';
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -51,14 +50,15 @@ export class AuthenticationService implements OnInit {
 	public updateUserDataChange() {
 		this.userDataChange.next(this.getUserData());
 	}
-
 	getExpiration() {
 		const expiration = localStorage.getItem('expires_at');
 		const expiresAt = JSON.parse(expiration);
 		console.log(expiresAt);
 		// return moment(expiresAt);
 	}
-
+	public getAuthenticationToken() {
+		return localStorage.getItem('accessToken');
+	}
 	getUserData(): object {
 		let token = localStorage.getItem('accessToken');
 		if (token) {

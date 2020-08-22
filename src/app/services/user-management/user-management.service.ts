@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
 	providedIn: 'root'
@@ -14,10 +14,13 @@ export class UserManagementService {
 		return this.http.post('http://localhost:5000/users', usuario);
 	}
 
-	public checkByEmail(email: any): any {
+	public checkByEmail(email: string): any {
 		return this.http.get('http://localhost:5000/users/check/' + email);
 	}
-	public getById(userId: any): any {
+	public getById(userId: string): any {
 		return this.http.get('http://localhost:5000/users/' + userId);
+	}
+	public patchById(userId: string, data: any): any {
+		return this.http.patch('http://localhost:5000/users/' + userId, data);
 	}
 }

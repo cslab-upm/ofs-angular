@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
 	isLoggedIn: boolean;
 	userData: object;
 	userName: string;
-	logout: Function;
 	constructor(protected authService: AuthenticationService, private router: Router) {
 		this.isNavbarCollapsed = true;
 		this.authService.isLoggedChange.subscribe((value) => {
@@ -23,15 +22,15 @@ export class NavbarComponent implements OnInit {
 			this.userData = value ? value : undefined;
 			this.userName = value ? value['name'] : undefined;
 		});
-		this.logout = () => {
-			this.authService.logout();
-			this.authService.updateIsLoggedChange();
-			this.authService.updateUserDataChange();
-			this.router.navigateByUrl('/');
-		};
 	}
 	ngOnInit() {
 		this.authService.updateIsLoggedChange();
 		this.authService.updateUserDataChange();
 	}
+	logout = () => {
+		this.authService.logout();
+		this.authService.updateIsLoggedChange();
+		this.authService.updateUserDataChange();
+		this.router.navigateByUrl('/');
+	};
 }
