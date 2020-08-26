@@ -1,1 +1,14 @@
-<p>main works!</p>
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="row justify-content-center">
+        <div class="ficha  transparent col-12 col-lg-8  z-depth-5">
+            <div class="card-content">
+                <full-calendar [options]="calendarOptions"></full-calendar>
+            </div>
+            <div class="card-content">
+                <input type="submit" class="btn white" value="Guardar" (click)="handleSubmit()" />
+            </div>
+        </div>
+    </div>
+
+</main>

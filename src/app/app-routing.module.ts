@@ -30,6 +30,10 @@ const routes: Routes = [
 		path: 'perfil',
 		loadChildren: () => import('./modules/profile/profile.module').then((m) => m.ProfileModule)
 	},
+	{
+		path: 'reservas',
+		loadChildren: () => import('./modules/bookings/bookings.module').then((m) => m.BookingsModule)
+	},
 	{ path: '**', component: NotFoundComponent }
 ];
 

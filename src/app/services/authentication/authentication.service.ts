@@ -59,7 +59,7 @@ export class AuthenticationService implements OnInit {
 	public getAuthenticationToken() {
 		return localStorage.getItem('accessToken');
 	}
-	getUserData(): object {
+	public getUserData(): object {
 		let token = localStorage.getItem('accessToken');
 		if (token) {
 			try {
