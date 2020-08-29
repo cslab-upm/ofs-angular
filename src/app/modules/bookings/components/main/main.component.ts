@@ -8,11 +8,16 @@ import {
 	isFutureEvent,
 	isFromSameUser,
 	filterFutureEvents,
-	filterPastEvents
+	filterPastEvents,
+	filterUserEvents
 } from './utils';
 import { BookingsService } from '../../services/bookings.service';
 import { NONE_TYPE } from '@angular/compiler';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import '@fortawesome/fontawesome-free/css/all.css'; // needs additional webpack config!
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-main',
@@ -23,7 +28,11 @@ export class MainComponent implements OnInit {
 	currentEvents: EventApi[] = [];
 	calendarOptions: CalendarOptions;
 	userId: string;
-	constructor(protected bookingService: BookingsService, protected authService: AuthenticationService) {
+	constructor(
+		protected router: Router,
+		protected bookingService: BookingsService,
+		protected authService: AuthenticationService
+	) {
 		this.calendarOptions = {
 			initialView: 'timeGridWeek',
 			slotDuration: '00:30',
@@ -38,19 +47,22 @@ export class MainComponent implements OnInit {
 			editable: false,
 			selectAllow: this.selectAllowFunction,
 			eventAllow: this.changeAllowFunction,
-			eventBorderColor: 'transparent'
+			eventBorderColor: 'transparent',
+			eventBackgroundColor: 'rgb(128 0 128 / 43%)'
 		};
+		this.userId = authService.getUserData()['userId'];
 
 		bookingService.getBookings().subscribe(
 			(result) => {
 				console.log('receivedData', result);
-				filterPastEvents(result).forEach((event) => (event.backgroundColor = 'grey'));
-				filterFutureEvents(result).forEach((event) => (event.editable = true));
+				filterFutureEvents(filterUserEvents(result, this.userId)).forEach(
+					(event) => ((event.editable = true), (event.backgroundColor = 'rgb(55 188 17 / 91%)'))
+				);
+				filterPastEvents(result).forEach((event) => (event.backgroundColor = '#808080b5'));
 				this.calendarOptions.events = result;
 			},
 			(error) => console.error(error)
 		);
-		this.userId = authService.getUserData()['userId'];
 	}
 
 	ngOnInit(): void {
@@ -79,7 +91,8 @@ export class MainComponent implements OnInit {
 			end: selectInfo.endStr,
 			editable: true,
 			startEditable: true,
-			allow: this.changeAllowFunction
+			allow: this.changeAllowFunction,
+			backgroundColor: 'rgb(55 188 17 / 91%)'
 		});
 	}
 	handleEventClick(clickInfo: EventClickArg) {
@@ -113,23 +126,22 @@ export class MainComponent implements OnInit {
 		this.currentEvents = events;
 	}
 	handleSubmit() {
-		const event = filterFutureEvents(this.currentEvents)[0];
+		const event = filterUserEvents(filterFutureEvents(this.currentEvents), this.userId)[0];
 		console.log('id', event.id);
 		event
 			? event.id
 				? this.bookingService
 						.updateBooking(event.id, event)
 						.subscribe(
-							(result) => alert('Cambios guardados correctamente'),
-							(error) => alert('Fallo al guardar los cambios')
+							(result) => this.router.navigateByUrl('/reservas/exito'),
+							(error) => this.router.navigateByUrl('/reservas/fracaso')
 						)
-				: this.bookingService.saveBooking(event).subscribe(
-						(result) => {
-							filterFutureEvents(this.currentEvents)[0]._def.publicId = result.id;
-							alert('Evento guardado');
-						},
-						(error) => alert('Fallo al guardar los cambios')
-					)
+				: this.bookingService
+						.saveBooking(event)
+						.subscribe(
+							(result) => this.router.navigateByUrl('/reservas/exito'),
+							(error) => this.router.navigateByUrl('/reservas/fracaso')
+						)
 			: alert('No hay eventos seleccionados');
 	}
 }

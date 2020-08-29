@@ -8,8 +8,7 @@ import { MainComponent } from './components/main/main.component';
 const routes: Routes = [
     { path: '', component: MainComponent },
     { path: 'exito', component: SuccessComponent },
-    { path: 'fallo', component: FailureComponent },
-    { path: ':codeId', component: MainComponent },
+    { path: 'fallo', component: FailureComponent }
 
 
 ];

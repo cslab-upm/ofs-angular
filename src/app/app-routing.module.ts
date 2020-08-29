@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { AccountComponent } from './components/account/account.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { IsUserLoggedGuard } from './guards/is-user-logged.guard';
+import { AuthenticationService } from './services/authentication/authentication.service';
 
 const routes: Routes = [
 	{ path: '', component: LandingComponent },
@@ -28,17 +29,25 @@ const routes: Routes = [
 	},
 	{
 		path: 'perfil',
-		loadChildren: () => import('./modules/profile/profile.module').then((m) => m.ProfileModule)
+		loadChildren: () => import('./modules/profile/profile.module').then((m) => m.ProfileModule),
+		canActivate: [ IsUserLoggedGuard ]
 	},
 	{
 		path: 'reservas',
-		loadChildren: () => import('./modules/bookings/bookings.module').then((m) => m.BookingsModule)
+		loadChildren: () => import('./modules/bookings/bookings.module').then((m) => m.BookingsModule),
+		canActivate: [ IsUserLoggedGuard ]
+	},
+	{
+		path: 'controles',
+		loadChildren: () => import('./modules/controls/controls.module').then((m) => m.ControlsModule),
+		canActivate: [ IsUserLoggedGuard ]
 	},
 	{ path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
 	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ]
+	exports: [ RouterModule ],
+	providers: [ IsUserLoggedGuard, AuthenticationService ]
 })
 export class AppRoutingModule {}

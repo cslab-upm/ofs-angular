@@ -34,7 +34,6 @@ export class AuthenticationService implements OnInit {
 	public register(user: any): Observable<any> {
 		return this.http.post('http://localhost:5000/users', user);
 	}
-
 	public logout() {
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');
@@ -46,6 +45,7 @@ export class AuthenticationService implements OnInit {
 
 	public updateIsLoggedChange() {
 		this.isLoggedChange.next(localStorage.getItem('accessToken') ? true : false);
+		return localStorage.getItem('accessToken') ? true : false;
 	}
 	public updateUserDataChange() {
 		this.userDataChange.next(this.getUserData());

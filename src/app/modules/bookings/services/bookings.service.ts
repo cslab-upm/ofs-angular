@@ -17,8 +17,10 @@ export class BookingsService {
 	public getBookings(): Observable<any> {
 		return this.http.get('http://localhost:5000/bookings/');
 	}
-
 	public deleteBooking(bookingId: string): Observable<any> {
 		return this.http.delete('http://localhost:5000/bookings/' + bookingId);
-	}
+  }
+  public getCurrentBooking():Observable<any>{
+    return this.http.get('http://locakhost:5000/bookings/current')
+  }
 }

@@ -33,4 +33,7 @@ export class NavbarComponent implements OnInit {
 		this.authService.updateUserDataChange();
 		this.router.navigateByUrl('/');
 	};
+	public toggleNavbarCollapsed() {
+		this.isNavbarCollapsed = this.isNavbarCollapsed ? false : true;
+	}
 }

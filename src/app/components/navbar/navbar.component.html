@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-md navbar-dark   z-depth-3">
+<nav class="navbar navbar-expand-md navbar-dark   z-depth-3" ngbDropdown>
     <a class="navbar-brand" href="#">
         <img src="../../../assets/img/logos/logo_ofs_dark.png" width="30" height="30" class="navbar-logo" alt="OFS">
     </a>
-    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!isNavbarCollapsed" aria-label="Toggle navigation" (click)="toggleNavbarCollapsed()">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarsDefault">
+    <div class="navbar-collapse" [class.collapse]="isNavbarCollapsed" id="navbarsDefault">
         <ul class="navbar-nav mr-auto">
             <li class="dropdown nav-item" ngbDropdown>
                 <a class="dropdown-toggle nav-link" id="id01" ngbDropdownToggle>Monitorización</a>
@@ -16,6 +16,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/equipamiento']">Equipamiento</a>
+            </li>
+            <li *ngIf="isLoggedIn" class="nav-item">
+                <a class="nav-link" [routerLink]="['/reservas']">Reservas</a>
             </li>
             <!-- <li class="nav-item">
                 <a class="nav-link">Contacto</a>
@@ -29,7 +32,6 @@
                 <a *ngIf="isLoggedIn" class="dropdown-toggle nav-link" id="id02" ngbDropdownToggle>{{userName}}</a>
                 <div *ngIf="isLoggedIn" class="dropdown-menu" aria-labelledby="id02" ngbDropdownMenu>
                     <a class="dropdown-item" [routerLink]="['/perfil']">Mi cuenta</a>
-                    <a class="dropdown-item" (click)="pictures()">Mis fotos</a>
                     <a class="dropdown-item" (click)="logout()">Logout</a>
                 </div>
             </li>

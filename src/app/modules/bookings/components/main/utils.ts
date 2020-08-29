@@ -21,6 +21,7 @@ export function isBelowMaximumDuration(eventToCheck): boolean {
 }
 
 export function isFromSameUser(eventToCheck, userId): boolean {
+	console.log('eventToCheck', eventToCheck);
 	return eventToCheck.extendedProps.userId === userId;
 }
 

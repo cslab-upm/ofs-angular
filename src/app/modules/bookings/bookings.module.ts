@@ -6,7 +6,7 @@ import { FailureComponent } from './components/failure/failure.component';
 import { BookingsRoutingModule } from './bookings.routing.module';
 
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
-import timeGridPlugin  from '@fullcalendar/timegrid'; // a plugin
+import timeGridPlugin from '@fullcalendar/timegrid'; // a plugin
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin
 
 FullCalendarModule.registerPlugins([
