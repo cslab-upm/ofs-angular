@@ -9,7 +9,9 @@ import {
 	isFromSameUser,
 	filterFutureEvents,
 	filterPastEvents,
-	filterUserEvents
+	filterUserEvents,
+	filterCurrentEvent,
+	isCurrentEvent
 } from './utils';
 import { BookingsService } from '../../services/bookings.service';
 import { NONE_TYPE } from '@angular/compiler';
@@ -54,20 +56,20 @@ export class MainComponent implements OnInit {
 
 		bookingService.getBookings().subscribe(
 			(result) => {
-				console.log('receivedData', result);
 				filterFutureEvents(filterUserEvents(result, this.userId)).forEach(
-					(event) => ((event.editable = true), (event.backgroundColor = 'rgb(55 188 17 / 91%)'))
+					(event) => ((event.editable = true), (event.backgroundColor = 'rgb(18 255 238 / 60%)'))
 				);
 				filterPastEvents(result).forEach((event) => (event.backgroundColor = '#808080b5'));
+				filterCurrentEvent(filterUserEvents(result, this.userId)).forEach(
+					(event) => (event.backgroundColor = 'rgb(55 188 17 / 91%)')
+				);
 				this.calendarOptions.events = result;
 			},
 			(error) => console.error(error)
 		);
 	}
 
-	ngOnInit(): void {
-		console.log(this.calendarOptions.initialEvents);
-	}
+	ngOnInit(): void {}
 	selectAllowFunction = (selectInfo) => {
 		let conditionArray = [
 			isBelowMaximumDuration(selectInfo),
@@ -92,13 +94,13 @@ export class MainComponent implements OnInit {
 			editable: true,
 			startEditable: true,
 			allow: this.changeAllowFunction,
-			backgroundColor: 'rgb(55 188 17 / 91%)'
+			backgroundColor: 'rgb(18 255 238 / 60%)'
 		});
 	}
 	handleEventClick(clickInfo: EventClickArg) {
 		if (
 			isFromSameUser(clickInfo.event, this.userId) &&
-			isFutureEvent(clickInfo.event) &&
+			(isFutureEvent(clickInfo.event) || isCurrentEvent(clickInfo.event)) &&
 			confirm('¿Desea eliminar el evento seleccionado?')
 		) {
 			this.deleteEvent(clickInfo.event);
@@ -127,20 +129,19 @@ export class MainComponent implements OnInit {
 	}
 	handleSubmit() {
 		const event = filterUserEvents(filterFutureEvents(this.currentEvents), this.userId)[0];
-		console.log('id', event.id);
 		event
 			? event.id
 				? this.bookingService
 						.updateBooking(event.id, event)
 						.subscribe(
 							(result) => this.router.navigateByUrl('/reservas/exito'),
-							(error) => this.router.navigateByUrl('/reservas/fracaso')
+							(error) => this.router.navigateByUrl('/reservas/fallo')
 						)
 				: this.bookingService
 						.saveBooking(event)
 						.subscribe(
 							(result) => this.router.navigateByUrl('/reservas/exito'),
-							(error) => this.router.navigateByUrl('/reservas/fracaso')
+							(error) => this.router.navigateByUrl('/reservas/fallo')
 						)
 			: alert('No hay eventos seleccionados');
 	}

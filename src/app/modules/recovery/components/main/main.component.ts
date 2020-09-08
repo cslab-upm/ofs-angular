@@ -23,15 +23,20 @@ export class MainComponent implements OnInit {
 		this.recoveryCode = this.route.snapshot.params['recoveryCode'];
 	}
 	sendEmail = (value) => {
-		console.log('value', value);
-		this.userService.checkByEmail(value.email).subscribe((exists) => {
-			exists
-				? this.recoveryService.sendPasswordRecoveryEmail(value.email).subscribe((data) => {
-						alert('Mensaje enviado, comprueba to bandeja de entrada');
-						this.router.navigateByUrl('/');
-					})
-				: alert('El email introducido no se encuentra en nuestra base de datos');
-		});
+		this.userService.checkByEmail(value.email).subscribe(
+			(exists) => {
+				exists
+					? this.recoveryService.sendPasswordRecoveryEmail(value.email).subscribe((data) => {
+							alert('Mensaje enviado, comprueba to bandeja de entrada');
+							this.router.navigateByUrl('/');
+						})
+					: alert('El email introducido no se encuentra en nuestra base de datos');
+			},
+			(error) => {
+				console.log('error', error);
+				this.router.navigateByUrl('/recuperar/fallo');
+			}
+		);
 	};
 	submitPassword(value) {
 		this.recoveryService.setNewPasword(this.recoveryCode, value).subscribe(

@@ -6,6 +6,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { IsUserLoggedGuard } from './guards/is-user-logged.guard';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { IsUserActiveGuard } from './guards/is-user-active.guard';
+import { HasCurrentBookingGuard } from './guards/has-current-booking.guard';
 
 const routes: Routes = [
 	{ path: '', component: LandingComponent },
@@ -35,12 +37,12 @@ const routes: Routes = [
 	{
 		path: 'reservas',
 		loadChildren: () => import('./modules/bookings/bookings.module').then((m) => m.BookingsModule),
-		canActivate: [ IsUserLoggedGuard ]
+		canActivate: [ IsUserLoggedGuard, IsUserActiveGuard ]
 	},
 	{
 		path: 'controles',
 		loadChildren: () => import('./modules/controls/controls.module').then((m) => m.ControlsModule),
-		canActivate: [ IsUserLoggedGuard ]
+		canActivate: [ IsUserLoggedGuard, IsUserActiveGuard, HasCurrentBookingGuard ]
 	},
 	{ path: '**', component: NotFoundComponent }
 ];

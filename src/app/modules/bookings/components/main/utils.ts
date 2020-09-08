@@ -2,7 +2,9 @@ import * as moment from 'moment';
 export function filterFutureEvents(events) {
 	return events.filter((event) => isFutureEvent(event));
 }
-
+export function filterCurrentEvent(events) {
+	return events.filter((event) => isCurrentEvent(event));
+}
 export function filterPastEvents(events) {
 	return events.filter((event) => isPastEvent(event));
 }
@@ -15,13 +17,15 @@ export function isPastEvent(event): boolean {
 	return moment(event.end).isBefore(moment.now());
 }
 
+export function isCurrentEvent(event): boolean {
+	return moment(event.end).isAfter(moment.now()) && moment(event.start).isBefore(moment.now());
+}
 export function isBelowMaximumDuration(eventToCheck): boolean {
 	var duration = moment.duration(moment(eventToCheck.end).diff(moment(eventToCheck.start)));
 	return duration.asHours() <= 4;
 }
 
 export function isFromSameUser(eventToCheck, userId): boolean {
-	console.log('eventToCheck', eventToCheck);
 	return eventToCheck.extendedProps.userId === userId;
 }
 
@@ -31,7 +35,7 @@ export function isFutureEvent(eventToCheck): boolean {
 
 export function isBelowLimitPerUser(userId, events): boolean {
 	const upcomingEventsByUser = events.filter(
-		(event) => event.extendedProps.userId === userId && isFutureEvent(event)
+		(event) => event.extendedProps.userId === userId && (isFutureEvent(event) || isCurrentEvent(event))
 	);
 	return upcomingEventsByUser.length < 1;
 }

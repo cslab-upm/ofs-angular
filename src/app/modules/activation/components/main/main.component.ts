@@ -33,13 +33,19 @@ export class MainComponent implements OnInit {
 	}
 	sendEmail = (value) => {
 		console.log('value', value);
-		this.userService.checkByEmail(value.email).subscribe((exists) => {
-			exists
-				? this.activationService.sendVerificationEmail(value.email).subscribe((data) => {
-						alert('Mensaje enviado, comprueba to bandeja de entrada');
-						this.router.navigateByUrl('/');
-					})
-				: alert('El email introducido no se encuentra en nuestra base de datos');
-		});
+		this.userService.checkByEmail(value.email).subscribe(
+			(exists) => {
+				exists
+					? this.activationService.sendVerificationEmail(value.email).subscribe((data) => {
+							alert('Mensaje enviado, comprueba to bandeja de entrada');
+							this.router.navigateByUrl('/');
+						})
+					: alert('El email introducido no se encuentra en nuestra base de datos');
+			},
+			(error) => {
+				console.log('error', error);
+				this.router.navigateByUrl('/activar/fallo');
+			}
+		);
 	};
 }

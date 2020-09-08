@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-
+import { Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
+import { BookingsService } from 'src/app/modules/bookings/services/bookings.service';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-main',
 	templateUrl: './main.component.html',
 	styleUrls: [ './main.component.scss' ]
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 	@ViewChild('imageControl') imageControl: ElementRef;
 	centralX;
 	centralY;
@@ -13,14 +15,40 @@ export class MainComponent implements OnInit {
 	positionX;
 	key;
 	fullScreen;
-	constructor() {
+	endTime;
+	timer;
+	constructor(protected bookingService: BookingsService, protected router: Router) {
 		this.centralX = 50;
 		this.centralY = 50;
 		this.positionY = this.centralX;
 		this.positionX = this.centralY;
+
+		bookingService.getCurrentBooking().subscribe(
+			(result) => {
+				this.endTime = moment(result['end']);
+				console.log('endTime', this.endTime);
+			},
+			(error) => console.log(error)
+		);
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.clearTimer();
+		this.setTimer();
+	}
+	ngOnDestroy(): void {
+		this.clearTimer();
+	}
+
+	setTimer() {
+		this.timer = setTimeout(() => {
+			alert('Tiempo de reserva finalizado');
+			this.router.navigateByUrl('/reservas');
+		}, this.endTime.diff(moment()));
+	}
+	clearTimer() {
+		this.timer ? clearTimeout(this.timer) : '';
+	}
 	toggleFullscreen() {
 		this.fullScreen = !this.fullScreen;
 	}
@@ -51,14 +79,14 @@ export class MainComponent implements OnInit {
 		}
 		if (event.key === 'Enter') {
 			this.saveCoordinates();
-    }
+		}
 		if (event.key === 'Escape') {
 			this.exitFullscreen();
-    }
+		}
 	}
 	moveUp() {
 		this.positionY -= 1;
-    this.imageControl.nativeElement.style.backgroundPositionY = this.positionY + '%';
+		this.imageControl.nativeElement.style.backgroundPositionY = this.positionY + '%';
 	}
 	moveDown() {
 		this.positionY += 1;
