@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark   z-depth-3" ngbDropdown>
+<nav class="navbar navbar-expand-lg navbar-dark z-depth-3" ngbDropdown>
     <a class="navbar-brand" href="#">
         <img src="../../../assets/img/logos/logo_ofs_dark.png" width="30" height="30" class="navbar-logo" alt="OFS">
     </a>
@@ -21,7 +21,7 @@
                 <a class="nav-link" [routerLink]="['/reservas']">Reservas</a>
             </li>
             <li *ngIf="isLoggedIn" class="nav-item">
-                <a class="nav-link" [routerLink]="['/controles']">Controles</a>
+                <a class="nav-link" [routerLink]="['/controles']">Experimentos</a>
             </li>
             <!-- <li class="nav-item">
                 <a class="nav-link">Contacto</a>

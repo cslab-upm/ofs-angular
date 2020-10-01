@@ -36,18 +36,8 @@ export class RegisterComponent {
 						alert('Error al enviar mensaje');
 					}
 				);
-				this.authService.login(usuario.email, usuario.password).subscribe(
-					(data) => {
-						// Success
-						this.authService.setSession(data);
-						this.authService.updateIsLoggedChange();
-						this.authService.updateUserDataChange();
-						this.router.navigateByUrl('/');
-					},
-					(error) => {
-						console.log('Error en Login');
-					}
-				);
+
+				this.router.navigateByUrl('/');
 			});
 		});
 	}

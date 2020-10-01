@@ -3,11 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 import { IsUserLoggedGuard } from './guards/is-user-logged.guard';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IsUserActiveGuard } from './guards/is-user-active.guard';
 import { HasCurrentBookingGuard } from './guards/has-current-booking.guard';
+import { NotFoundComponent } from './modules/errors/components/not-found/not-found.component';
 
 const routes: Routes = [
 	{ path: '', component: LandingComponent },
@@ -43,6 +43,10 @@ const routes: Routes = [
 		path: 'controles',
 		loadChildren: () => import('./modules/controls/controls.module').then((m) => m.ControlsModule),
 		canActivate: [ IsUserLoggedGuard, IsUserActiveGuard, HasCurrentBookingGuard ]
+	},
+	{
+		path: 'error',
+		loadChildren: () => import('./modules/errors/errors.module').then((m) => m.ErrorsModule)
 	},
 	{ path: '**', component: NotFoundComponent }
 ];

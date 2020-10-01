@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserManagementService } from 'src/app/services/user-management/user-management.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-
+import { User } from '../../models/user.model';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,7 +11,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 	styleUrls: [ './main.component.scss' ]
 })
 export class MainComponent implements OnInit {
-	user: object;
+	user: User;
 	userId: string;
 	changePassword: boolean;
 	changeLastName: boolean;

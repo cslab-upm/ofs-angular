@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 	styleUrls: [ './login.component.scss' ]
 })
 export class LoginComponent implements OnInit {
-	@Input() user: string = 'gabcas28@gmail.com';
-	@Input() password: string = 's3cr3tp4sswo4rd';
+	@Input() user: string;
+	@Input() password: string;
 
 	constructor(protected authService: AuthenticationService, private router: Router) {}
 
@@ -19,14 +19,16 @@ export class LoginComponent implements OnInit {
 	login(): void {
 		this.authService.login(this.user, this.password).subscribe(
 			(data) => {
-        this.authService.setSession(data);
-        this.authService.updateIsLoggedChange();
-        this.authService.updateUserDataChange();
+				this.authService.setSession(data);
+				this.authService.updateIsLoggedChange();
+				this.authService.updateUserDataChange();
 				this.router.navigateByUrl('/');
 			},
 			(error) => {
-				alert('Error en Login');
-				console.error('Error en Login',error);
+				error.status === 0 || error.status === 500
+					? this.router.navigateByUrl('/error/500')
+					: alert('Error en Login');
+				console.error('Error en Login', error);
 			}
 		);
 	}

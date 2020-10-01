@@ -24,10 +24,10 @@ export class HasCurrentBookingGuard implements CanActivate {
 					observer.next(
 						result && result['extendedProps']['userId'] === this.authService.getUserData()['userId']
 							? true
-							: this.router.parseUrl('/reservas')
+							: this.router.parseUrl('/error/no-reservation')
 					);
 				},
-				(error) => observer.error(error)
+				(error) => observer.next(this.router.parseUrl('/error/500'))
 			);
 		});
 	}

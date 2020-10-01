@@ -13,6 +13,6 @@ export class IsUserActiveGuard implements CanActivate {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-		return this.authService.getUserData()['active'] ? true : this.router.parseUrl('/activar');
+		return this.authService.getUserData()['active'] ? true : this.router.parseUrl('error/not-active');
 	}
 }

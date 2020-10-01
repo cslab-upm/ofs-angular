@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,8 +20,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountComponent } from './components/account/account.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 import { httpInterceptorProviders } from './http-interceptors';
+import { AppConfig } from './app.config';
+
+export function initializeApp(appConfig: AppConfig) {
+	return () => appConfig.load();
+}
 
 @NgModule({
 	declarations: [
@@ -36,7 +40,6 @@ import { httpInterceptorProviders } from './http-interceptors';
 		RegisterComponent,
 		AccountComponent,
 		UserFormComponent,
-		NotFoundComponent
 	],
 	imports: [
 		AppRoutingModule,
@@ -57,6 +60,13 @@ import { httpInterceptorProviders } from './http-interceptors';
 			useValue: {
 				siteKey: '6LdxR74ZAAAAAEwaPD8lsdZ28Y-806q5eL6tBguk'
 			} as RecaptchaSettings
+		},
+		AppConfig,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: initializeApp,
+			deps: [ AppConfig ],
+			multi: true
 		}
 	],
 	bootstrap: [ AppComponent ]

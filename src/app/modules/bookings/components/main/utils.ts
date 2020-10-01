@@ -1,4 +1,9 @@
 import * as moment from 'moment';
+import { AppConfig } from 'src/app/app.config';
+
+export function filterEditedEvents(events) {
+	return events.filter((event) => isEditedEvent(event));
+}
 export function filterFutureEvents(events) {
 	return events.filter((event) => isFutureEvent(event));
 }
@@ -12,7 +17,9 @@ export function filterPastEvents(events) {
 export function filterUserEvents(events, userId) {
 	return events.filter((event) => isFromSameUser(event, userId));
 }
-
+export function isEditedEvent(event) {
+	return event.extendedProps.edited === true;
+}
 export function isPastEvent(event): boolean {
 	return moment(event.end).isBefore(moment.now());
 }
@@ -21,8 +28,11 @@ export function isCurrentEvent(event): boolean {
 	return moment(event.end).isAfter(moment.now()) && moment(event.start).isBefore(moment.now());
 }
 export function isBelowMaximumDuration(eventToCheck): boolean {
+	let maximumDuration = AppConfig.settings.bookings.max_booking_time_hours
+		? AppConfig.settings.bookings.max_booking_time_hours
+		: 4;
 	var duration = moment.duration(moment(eventToCheck.end).diff(moment(eventToCheck.start)));
-	return duration.asHours() <= 4;
+	return duration.asHours() <= maximumDuration;
 }
 
 export function isFromSameUser(eventToCheck, userId): boolean {
@@ -34,10 +44,13 @@ export function isFutureEvent(eventToCheck): boolean {
 }
 
 export function isBelowLimitPerUser(userId, events): boolean {
+	const BookingsPerUserLimit = AppConfig.settings.bookings.max_bookings_per_user
+		? AppConfig.settings.bookings.max_bookings_per_user
+		: 2;
 	const upcomingEventsByUser = events.filter(
 		(event) => event.extendedProps.userId === userId && (isFutureEvent(event) || isCurrentEvent(event))
 	);
-	return upcomingEventsByUser.length < 1;
+	return upcomingEventsByUser.length < BookingsPerUserLimit;
 }
 
 export function isAnOverlapEvent(eventToCheck, events): boolean {

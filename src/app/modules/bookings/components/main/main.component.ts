@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, FullCalendarComponent } from '@fullcalendar/angular';
 import * as moment from 'moment';
 import {
 	isAnOverlapEvent,
@@ -11,7 +11,8 @@ import {
 	filterPastEvents,
 	filterUserEvents,
 	filterCurrentEvent,
-	isCurrentEvent
+	isCurrentEvent,
+	filterEditedEvents
 } from './utils';
 import { BookingsService } from '../../services/bookings.service';
 import { NONE_TYPE } from '@angular/compiler';
@@ -20,6 +21,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'; // needs additional webpack config!
 import { Router } from '@angular/router';
+import allLocales from '@fullcalendar/core/locales-all';
 
 @Component({
 	selector: 'app-main',
@@ -30,12 +32,17 @@ export class MainComponent implements OnInit {
 	currentEvents: EventApi[] = [];
 	calendarOptions: CalendarOptions;
 	userId: string;
+
+	@ViewChild('calendar') calendarComponent: FullCalendarComponent;
+
 	constructor(
 		protected router: Router,
 		protected bookingService: BookingsService,
 		protected authService: AuthenticationService
 	) {
 		this.calendarOptions = {
+			locales: allLocales,
+			locale: 'es',
 			initialView: 'timeGridWeek',
 			slotDuration: '00:30',
 			defaultTimedEventDuration: '00:30',
@@ -44,13 +51,32 @@ export class MainComponent implements OnInit {
 			eventDurationEditable: true,
 			select: this.handleDateSelect.bind(this),
 			eventsSet: this.handleEvents.bind(this),
+			eventChange: this.handleEventChange.bind(this),
 			eventOverlap: false,
 			selectable: true,
-			editable: false,
+			editable: false, // In general they're not editable
 			selectAllow: this.selectAllowFunction,
 			eventAllow: this.changeAllowFunction,
 			eventBorderColor: 'transparent',
-			eventBackgroundColor: 'rgb(128 0 128 / 43%)'
+			eventBackgroundColor: 'rgb(128 0 128 / 43%)',
+			views: {
+				timeGrid: {
+					type: 'timeGrid',
+					duration: { days: 7 }
+				},
+				timeGridFourDays: {
+					type: 'timeGrid',
+					duration: { days: 4 }
+				},
+				timeGridTwoDays: {
+					type: 'timeGrid',
+					duration: { days: 2 }
+				},
+				timeGridOneDay: {
+					type: 'timeGrid',
+					duration: { days: 1 }
+				}
+			}
 		};
 		this.userId = authService.getUserData()['userId'];
 
@@ -68,8 +94,11 @@ export class MainComponent implements OnInit {
 			(error) => console.error(error)
 		);
 	}
-
+	viewMounted() {}
 	ngOnInit(): void {}
+	alert($something) {
+		alert($something);
+	}
 	selectAllowFunction = (selectInfo) => {
 		let conditionArray = [
 			isBelowMaximumDuration(selectInfo),
@@ -88,7 +117,7 @@ export class MainComponent implements OnInit {
 	handleDateSelect(selectInfo: DateSelectArg) {
 		const calendarApi = selectInfo.view.calendar;
 		calendarApi.addEvent({
-			extendedProps: { userId: this.userId },
+			extendedProps: { userId: this.userId, edited: true, new: true },
 			start: selectInfo.startStr,
 			end: selectInfo.endStr,
 			editable: true,
@@ -96,6 +125,9 @@ export class MainComponent implements OnInit {
 			allow: this.changeAllowFunction,
 			backgroundColor: 'rgb(18 255 238 / 60%)'
 		});
+	}
+	handleEventChange(changeInfo) {
+		if (!changeInfo.event.extendedProps.edited) changeInfo.event.setExtendedProp('edited', true);
 	}
 	handleEventClick(clickInfo: EventClickArg) {
 		if (
@@ -121,28 +153,42 @@ export class MainComponent implements OnInit {
 			event.remove();
 		}
 	}
-	createEventId() {
-		return Math.floor(Math.random() * 100000).toString();
-	}
 	handleEvents(events: EventApi[]) {
 		this.currentEvents = events;
 	}
 	handleSubmit() {
-		const event = filterUserEvents(filterFutureEvents(this.currentEvents), this.userId)[0];
+		const events = filterEditedEvents(filterUserEvents(filterFutureEvents(this.currentEvents), this.userId));
+		(Array.isArray(events) && events.length) > 0 ? this.saveEvents(events) : alert('No hay eventos seleccionados');
+	}
+	saveEvents(events: Array<any>) {
+		const event = events.pop();
+		console.log('event', event);
 		event
-			? event.id
+			? event.extendedProps.new // Checks if it's new event
 				? this.bookingService
-						.updateBooking(event.id, event)
-						.subscribe(
-							(result) => this.router.navigateByUrl('/reservas/exito'),
-							(error) => this.router.navigateByUrl('/reservas/fallo')
-						)
-				: this.bookingService
 						.saveBooking(event)
 						.subscribe(
-							(result) => this.router.navigateByUrl('/reservas/exito'),
-							(error) => this.router.navigateByUrl('/reservas/fallo')
+							(result) => this.saveEvents(events),
+							(error) => {console.error(error);
+							this.router.navigateByUrl('/reservas/fallo')}
 						)
-			: alert('No hay eventos seleccionados');
+				: this.bookingService
+						.updateBooking(event.id, event)
+						.subscribe(
+							(result) => this.saveEvents(events),
+							(error) => {console.error(error);
+                this.router.navigateByUrl('/reservas/fallo')}
+						)
+			: this.router.navigateByUrl('/reservas/exito');
+	}
+
+	adjustCalendar() {
+		let calendarApi = this.calendarComponent.getApi();
+		let width = window.innerWidth;
+		width <= 360
+			? calendarApi.changeView('timeGridOneDay')
+			: width <= 490
+				? calendarApi.changeView('timeGridTwoDays')
+				: width <= 1000 ? calendarApi.changeView('timeGridFourDays') : calendarApi.changeView('timeGrid');
 	}
 }

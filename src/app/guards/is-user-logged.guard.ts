@@ -12,6 +12,6 @@ export class IsUserLoggedGuard implements CanActivate {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-		return this.authService.updateIsLoggedChange() ? true : this.router.parseUrl('/login');
+		return this.authService.updateIsLoggedChange() ? true : this.router.parseUrl('/error/not-logged');
 	}
 }

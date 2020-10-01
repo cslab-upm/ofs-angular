@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <main class="container white-text">
-    <div class="row justify-content-center">
-        <div class="ficha  transparent col-12 col-lg-8  z-depth-5">
-            <div class="card-content full-calendar">
-                <full-calendar [options]="calendarOptions"></full-calendar>
+    <div class=" row justify-content-center ">
+        <div class="ficha transparent col-12 z-depth-5 ">
+            <div class="card-content full-calendar ">
+                <full-calendar #calendar [options]="calendarOptions" (window:load)="adjustCalendar()" (window:resize)="adjustCalendar()"></full-calendar>
             </div>
-            <div class="card-content">
-                <div class="row">
-                    <input type="submit" class="ml-auto btn white" value="Guardar Cambios" (click)="handleSubmit()" />
+            <div class="card-content ">
+                <div class="row ">
+                    <input type="submit " class="ml-auto btn white " value="Guardar Cambios " (click)="handleSubmit() " />
                 </div>
             </div>
         </div>

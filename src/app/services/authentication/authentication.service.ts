@@ -56,11 +56,11 @@ export class AuthenticationService implements OnInit {
 		console.log(expiresAt);
 		// return moment(expiresAt);
 	}
-	public getAuthenticationToken() {
+	getAuthenticationToken() {
 		return localStorage.getItem('accessToken');
 	}
 	public getUserData(): object {
-		let token = localStorage.getItem('accessToken');
+		let token = this.getAuthenticationToken();
 		if (token) {
 			try {
 				return JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));

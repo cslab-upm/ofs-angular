@@ -9,19 +9,21 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit, OnDestroy {
 	@ViewChild('imageControl') imageControl: ElementRef;
-	centralX;
-	centralY;
-	positionY;
-	positionX;
-	key;
-	fullScreen;
-	endTime;
-	timer;
+	centralX: number;
+	centralY: number;
+	positionY: number;
+	positionX: number;
+	key: string;
+	fullScreen: boolean;
+	endTime: moment.Moment;
+	timer: any;
+	selectedObject: string;
 	constructor(protected bookingService: BookingsService, protected router: Router) {
-		this.centralX = 50;
-		this.centralY = 50;
-		this.positionY = this.centralX;
-		this.positionX = this.centralY;
+		this.centralX = 11;
+		this.centralY = 9;
+		this.positionX = this.centralX;
+		this.positionY = this.centralY;
+		this.selectedObject = 'Select an Object';
 
 		bookingService.getCurrentBooking().subscribe(
 			(result) => {
@@ -109,18 +111,30 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	followObject = ($value) => {
-		console.log($value);
+		this.selectedObject = $value;
 		if ($value === 'moon') {
-			this.centralX = 70;
-			this.centralY = 30;
+			this.centralX = 84;
+			this.centralY = 9;
 		}
 		if ($value === 'sun') {
-			this.centralX = 50;
-			this.centralY = 50;
+			this.centralX = 11;
+			this.centralY = 9;
 		}
 		if ($value === 'mars') {
-			this.centralX = 25;
-			this.centralY = 25;
+			this.centralX = 15;
+			this.centralY = 50;
+		}
+		if ($value === 'jupiter') {
+			this.centralX = 82;
+			this.centralY = 51;
+		}
+		if ($value === 'saturn') {
+			this.centralX = 84;
+			this.centralY = 89;
+		}
+		if ($value === 'venus') {
+			this.centralX = 15;
+			this.centralY = 88;
 		}
 		this.moveCenter();
 	};

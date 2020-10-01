@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
 			this.userData = value ? value : undefined;
 			this.userName = value ? value['name'] : undefined;
 		});
-	}
+  }
 	ngOnInit() {
 		this.authService.updateIsLoggedChange();
 		this.authService.updateUserDataChange();
