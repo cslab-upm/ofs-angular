@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="row justify-content-center">
+        <div class="ficha transparent col-12 col-lg-10 z-depth-5">
+            <div class="card-content  center-align">
+                <h1>Recuperar contraseña</h1>
+            </div>
+            <div *ngIf="!recoveryCode" class="card-content ">
+                <recovery-form (formSubmit)="sendEmail($event)"></recovery-form>
+            </div>
+            <div *ngIf="recoveryCode" class="card-content ">
+                <passwordform (formSubmit)="submitPassword($event)">
+                </passwordform>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,11 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+	selector: 'navbar',
+	templateUrl: './navbar.component.html',
+	styleUrls: [ './navbar.component.scss' ]
 })
-
-export class NavbarComponent {
-
+export class NavbarComponent implements OnInit {
+	isNavbarCollapsed: boolean;
+	isLoggedIn: boolean;
+	userData: object;
+	userName: string;
+	constructor(protected authService: AuthenticationService, private router: Router) {
+		this.isNavbarCollapsed = true;
+		this.authService.isLoggedChange.subscribe((value) => {
+			this.isLoggedIn = value;
+		});
+		this.authService.userDataChange.subscribe((value) => {
+			this.userData = value ? value : undefined;
+			this.userName = value ? value['name'] : undefined;
+		});
+  }
+	ngOnInit() {
+		this.authService.updateIsLoggedChange();
+		this.authService.updateUserDataChange();
+	}
+	logout = () => {
+		this.authService.logout();
+		this.authService.updateIsLoggedChange();
+		this.authService.updateUserDataChange();
+		this.router.navigateByUrl('/');
+	};
+	public toggleNavbarCollapsed() {
+		this.isNavbarCollapsed = this.isNavbarCollapsed ? false : true;
+	}
 }

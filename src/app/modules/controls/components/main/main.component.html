@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="row justify-content-center">
+        <div class="ficha  transparent col-12 col-lg-8  z-depth-5">
+            <div class="card-content">
+                <div class="row">
+                    <div [class.overlay]="fullScreen" #imageControl class="img-control col-12" (click)="toggleFullscreen()">
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <buttons (onUp)="moveUp()" (onDown)="moveDown()" (onLeft)="moveLeft()" (onRight)="moveRight()" (onCenter)="moveCenter()"></buttons>
+
+                    </div>
+
+                    <div class="col-auto ml-auto">
+                        <div class="dropdown ml-auto" ngbDropdown>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" ngbDropdownToggle>{{selectedObject}}</button>
+                            <div class="dropdown-menu no-select" aria-labelledby="dropdownMenuButton" ngbDropdownMenu>
+                                <a class="dropdown-item no-select" (click)="followObject('moon')">Luna</a>
+                                <a class="dropdown-item no-select" (click)="followObject('sun')">Sol</a>
+                                <a class="dropdown-item no-select" (click)="followObject('mars')">Marte</a>
+                                <a class="dropdown-item no-select" (click)="followObject('jupiter')">Júpiter</a>
+                                <a class="dropdown-item no-select" (click)="followObject('venus')">Venus</a>
+                                <a class="dropdown-item no-select" (click)="followObject('saturn')">Saturno</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 row" (change)="moveToCoordinates(coordX.value,coordY.value)">
+
+                        <div class="offset-3 col-3">
+                            <label class="white-text no-select" for="coordX">Ascensión Recta</label>
+                            <input #coordX class="white-text" id="coordX" type="number" [(value)]="positionX">
+                        </div>
+                        <div class="offset-1 col-3">
+                            <label class="white-text  no-select" for="coordY">Declinación</label>
+                            <input #coordY class="white-text" id="coordY" type="number" [(value)]="positionY">
+                        </div>
+                        <div class="col-1 ">
+                            <label class="white-text  no-select" for="guardar"></label>
+                            <input id="guardar" type="submit" class="btn btn-secondary" value="Apuntar" (click)="saveCoordinates()">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

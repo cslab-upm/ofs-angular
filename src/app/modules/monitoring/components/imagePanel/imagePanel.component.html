@@ -1,0 +1,17 @@
+<div *ngIf="loading" class="row justify-content-center text-white">
+    <div class="ficha transparent center-align">
+        <div class="card-content row">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>
+<div class="row panel-container" *ngIf="!loading">
+    <div class="col-12 col-md-6 col-xl-3 camera-container" *ngFor="let camera of cameras; index as i">
+        <div class="">
+            <h3>{{camera.name}}</h3>
+        </div>
+        <div class="">
+            <img class="panel-img" [src]="camera.image" alt="My image {{i + 1}}">
+        </div>
+    </div>
+</div>

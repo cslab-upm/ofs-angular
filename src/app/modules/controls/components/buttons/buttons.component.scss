@@ -1,0 +1,30 @@
+fa-icon {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 1);
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                            supported by Chrome, Edge, Opera and Firefox */
+}
+
+fa-icon:hover {
+    cursor: pointer;
+    color: rgb(93, 255, 78);
+}
+
+fa-icon:active {
+    cursor: pointer;
+    color: rgba(93, 255, 78, 0.384);
+}

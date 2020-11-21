@@ -1,36 +1,27 @@
-<div class="equipment-container" style="color: white;">
-    <div class="equipment-title">Equipamiento</div>
-    <div class="buttons">
-        <div class="button-filter" [ngClass]="{selected: selectedType === 'all'}" (click)="filterEquipment('all')">Todos</div>
-        <div class="button-filter" [ngClass]="{selected: selectedType === 'cameras'}" (click)="filterEquipment('cameras')">Cámaras</div>
-        <div class="button-filter" [ngClass]="{selected: selectedType === 'sensors'}" (click)="filterEquipment('sensors')">Sensores</div>
-        <div class="button-filter" [ngClass]="{selected: selectedType === 'telescopes'}" (click)="filterEquipment('telescopes')">Telescópios</div>
-    </div>
-    <div class="row">
-        <div class="col-4 equipment-device-container" *ngFor="let device of showingEquipment">
-            <div class="equipment-device">
-                <div class="equipment-img row">
-                    <img src="{{device.image}}">
-                </div>
-                <div class="row">
-                    <!-- <div class="col-12 row"> -->
-                    <div class="col-4"><b>Nombre:</b></div>
-                    <div class="col-8">{{device.name}}</div>
-
-                    <div class="col-4"><b>Modelo:</b></div>
-                    <div class="col-8">{{device.model}}</div>
-
-                    <div class="col-4"><b>Descripción:</b></div>
-                    <div class="col-8">{{device.description}}</div>
-
-                    <ng-container *ngFor="let property of device.properties">
-                        <div class="col-4"><b>{{property.name}}:</b></div>
-                        <div class="col-8">{{property.value}}</div>
-                    </ng-container>
-                </div>
-            </div>
-
+<div class="container flow-text text-white ">
+    <div class="row  justify-content-center ficha  ">
+        <div *ngFor="let elem of types" class="rounded button-filter  text-white col-auto  z-depth-5" [ngClass]="{selected: selectedType === elem.type}" (click)="filterEquipment(elem.type)">
+            <div>{{elem.label}}</div>
         </div>
     </div>
+    <div class="ficha row bg-transparent no-padding rounded z-depth-5" *ngFor="let device of showingEquipment">
+        <div class=" col-12 col-lg-6 no-padding">
+            <img class="image rounded" src="{{device.image}}">
+            <!-- <div class="col-12 row"> -->
+        </div>
+        <div class=" col-12 col-lg-6 ficha">
+
+            <h1 class="card-title">{{device.model}}</h1>
+
+            <p>{{device.description}}</p>
+            <div class="transparent" *ngFor="let property of device.properties ">
+                <div class="row">
+                    <p class="font-weight-light col-4">{{property.name}}</p>
+                    <p class="col-8">{{property.value}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>

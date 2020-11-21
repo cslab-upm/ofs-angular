@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="row justify-content-center">
+        <div class="ficha transparent col-12 col-lg-8  z-depth-5">
+            <form class="card-content container">
+
+                <h1 class="center-align">Iniciar Sesión</h1>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="user" class="card-title">Usuario</label>
+                        <input name="user" type="text" class="white-text" [(ngModel)]="user" required>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="password" class="card-title">Contraseña</label>
+                        <input name="password" type="password" class="white-text" [(ngModel)]="password" required>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn white float-right" (click)="login()">Entrar</button>
+                    </div>
+                    <div class="col-12">
+                        <a href="/recuperar">¿Has olvidado tu contraseña?</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</main>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<main class="container white-text">
+    <div class="row justify-content-center">
+        <div *ngIf="user" class="ficha  transparent col-12 col-lg-8  z-depth-5">
+            <div class="card-content container">
+                <div class="card-content ">
+                    <h1 class="center-align">Mi cuenta</h1>
+                </div>
+                <div class="card-content row container">
+                    <p class="card-title col-12 col-md-4">Email:</p>
+                    <p class="col-10 col-md-6">{{user.email}}</p>
+                </div>
+                <div class="card-content row container">
+                    <p class=" card-title  col-12 col-md-4">Nombre:</p>
+                    <fa-icon [class.active]="changeFirstName" (click)="toggleChangeFirstName()" [icon]="faEdit"></fa-icon>
+                    <p class="col-10 col-md-6">{{user.firstName}}</p>
+                    <div *ngIf="changeFirstName" class="card-content col-12">
+                        <firstNameForm (formSubmit)="submit($event)">
+                        </firstNameForm>
+                    </div>
+                </div>
+                <div class="card-content row container">
+                    <p class="card-title  col-12 col-md-4">Apellidos:</p>
+                    <fa-icon [class.active]="changeLastName" (click)="toggleChangeLastName()" [icon]="faEdit"></fa-icon>
+                    <p class="col-10 col-md-6">{{user.lastName}}</p>
+                    <div *ngIf="changeLastName" class="card-content col-12">
+                        <lastNameForm (formSubmit)="submit($event)">
+                        </lastNameForm>
+                    </div>
+                </div>
+                <div class="card-content row container">
+                    <p class="card-title  col-12 col-md-4">Contraseña:</p>
+                    <fa-icon [class.active]="changePassword" (click)="toggleChangePassword()" [icon]="faEdit"></fa-icon>
+                    <p class="col-10 col-md-6">{{user.password? "**********":""}}</p>
+                    <div *ngIf="changePassword" class="card-content col-12">
+                        <passwordform (formSubmit)="submit($event)">
+                        </passwordform>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
